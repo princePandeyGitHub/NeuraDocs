@@ -8,8 +8,8 @@ NeuraDocs is a multi-tenant Retrieval-Augmented Generation (RAG) platform design
 
 The following diagram illustrates the high-level architecture of NeuraDocs. The system follows a decoupled three-tier architecture:
 1. **Frontend Presentation Layer**: A responsive React/Vite web application.
-2. **Backend Application Layer**: An asynchronous FastAPI (Python) service that handles authentication, file processing, database operations, and RAG orchestration.
-3. **Data & AI Layer**: PostgreSQL (relational metadata), Vector Database (embeddings storage), and LLM API (for embeddings and chat generation).
+2. **Backend Application Layer**: An express.js service (JavaScript) service that handles authentication, file processing, database operations.
+3. **Data & AI Layer**: PostgreSQL (relational metadata), Vector Database (embeddings storage), and LLM API (for embeddings and chat generation). This layers includes ai development so it will use python fastapi.
 
 ```mermaid
 graph TD
@@ -20,7 +20,7 @@ graph TD
 
     %% Backend
     subgraph Backend [Application Layer]
-        API[FastAPI Gateway]
+        API[Express.js Gateway]
         Auth[JWT Authentication Service]
         Ingest[Document Ingestion Pipeline]
         RAG[RAG Orchestrator]
@@ -30,7 +30,7 @@ graph TD
     subgraph Storage [Data & AI Layer]
         DB[(PostgreSQL Relational DB)]
         VDB[(Vector Database / pgvector)]
-        LLM[LLM & Embedding API - e.g., Gemini/OpenAI]
+        LLM[LLM & Embedding API - e.g., llama 3.18b instant Groq]
     end
 
     %% Interactions
@@ -257,9 +257,9 @@ erDiagram
   * **Styling**: Vanilla CSS or TailwindCSS with CSS variables for dynamic custom styling. Dark-mode first design matching modern AI web applications.
   * **State & Networking**: Axios or fetch for API communication, React Markdown for rendering bot answers.
 * **Backend**:
-  * **Framework**: Python 3.11+ with **FastAPI**. High performance, native async support, and excellent ecosystem for RAG tools.
+  * **Framework**: Expres.js connnected with Python 3.11+ with **FastAPI**. High performance, native async support, and excellent ecosystem for RAG tools. It will be based on micro-service architecture.
   * **Document Parsing**: `pypdf` (or `pdfplumber`), `python-docx`, and native Python `json`.
-  * **Orchestration**: Direct integration with Gemini/OpenAI SDKs (or LangChain/LlamaIndex if complexity scales).
+  * **Orchestration**: Direct integration with llama 3.18b instant model from groq.
 * **Database**:
   * **Primary DB**: **PostgreSQL** with the `pgvector` extension. This simplifies storage by placing relational tables and vector embeddings in a single database while maintaining strict RLS isolation.
 
